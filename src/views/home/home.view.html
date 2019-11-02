@@ -1,128 +1,43 @@
 <div>
-    <section class="dashboard slice_5">
-        <div
-            class="container"
-            data-intro="<h3>Este é o Dashboard da mLabs</h3><p>Aqui você vai verificar, de imediato, a quantidade de curtidas e pessoas engajadas em suas redes sociais e website.</p>"
-            data-position="bottom-middle-aligned"
-            data-step="1"
-        >
+    <section class="dashboard">
+        <div class="container">
             <div class="widget_group">
-                <div class="widget widget-dashboard">
+                <div v-for="(channel, index) of channels" :key="index" class="widget widget-dashboard">
                     <div class="widget-front">
-                        <div
-                            class="widget-icon"
-                            style="background: url('/assets/channels/facebook_dashboard_logoff.png') no-repeat 0 0; background-size:contain;"
-                        ></div>
                         <div class="widget-help"></div>
-                        <h3>Facebook</h3>
+                        <h3 v-html="channel.name"></h3>
                         <div class="widget-login">
-                            <a href="javascript:login_facebook()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>Twitter</h3>
-                        <div class="widget-login">
-                            <a href="javascript:login_twitter()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>Instagram</h3>
-                        <div class="widget-login">
-                            <a href="javascript:login_instagram()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>Google meu Negócio</h3>
-                        <div class="new-feature-channel">beta</div>
-                        <div class="widget-login">
-                            <a href="javascript:login_google_my_business()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>Pinterest</h3>
-                        <div class="widget-login">
-                            <a href="javascript:login_pinterest()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="widget_group">
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>LinkedIn</h3>
-                        <div class="widget-login">
-                            <a href="javascript:login_linkedin()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>YouTube</h3>
-                        <div class="widget-login">
-                            <a href="javascript:login_youtube()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>WhatsApp</h3>
-                        <div class="new-feature-channel">beta</div>
-                        <div class="widget-login">
-                            <a href="javascript:login_whatsapp()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-icon"></div>
-                        <div class="widget-help"></div>
-                        <h3>Google Analytics</h3>
-                        <div class="widget-login">
-                            <a href="javascript:login_analytics()" title="Adicionar">
-                                <p>Adicionar</p>
-                            </a>
+                            <button @click="toggleModal(channel.channel_key)">Adicionar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <transition name="modal" v-if="showModal">
+        <div class="modal-mask">
+            <div class="modal-wrapper">
+                <div class="modal-container">
+                    <div class="modal-header">
+                        default header
+                    </div>
+
+                    <div class="modal-body">
+                        <p v-for="page of channelsList">{{ `${page.name} - ${page.channel_key}` }}</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="modal-back-button" @click="toggleModal">
+                            Voltar
+                        </button>
+
+                        <button class="modal-default-button" @click="toggleModal">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </transition>
 </div>
