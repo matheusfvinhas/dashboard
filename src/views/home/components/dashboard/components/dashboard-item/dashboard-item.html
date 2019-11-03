@@ -1,0 +1,17 @@
+<div>
+    <div v-if="isConnected" :class="`dashboard-front-connected dashboard-front-connected--${channel.channel_key}`">
+        <div :class="`dashboard-front-connected__title dashboard-front-connected__title--${channel.channel_key}`">
+            {{ connectedChannelName }}
+        </div>
+        <div class="dashboard-front-connected__title">
+            {{ channel.name }}
+        </div>
+    </div>
+    <div v-else class="dashboard-front">
+        <h3 v-html="channel.name"></h3>
+
+        <button class="dashboard-front__add" @click="toggleModal">
+            Adicionar
+        </button>
+    </div>
+</div>
