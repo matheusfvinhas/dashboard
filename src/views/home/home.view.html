@@ -20,11 +20,29 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
                     <div class="modal-header">
-                        default header
+                        <div class="modal-header__title">Vincular página do {{ seletedChannelTitle }}</div>
+
+                        <div id="mdiv" @click="toggleModal">
+                            <div class="mdiv">
+                                <div class="md"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-body">
-                        <p v-for="page of channelsList">{{ `${page.name} - ${page.channel_key}` }}</p>
+                        <h3>Selecione a página que você deseja vincular a este perfil</h3>
+                        <div class="modal-body--item" v-for="page of channelsList" @click="selectedPage = page">
+                            <div>
+                                <img class="modal-body--item__picture" :src="page.picture" alt="Imagem do perfil" />
+                            </div>
+                            <div class="modal-body--item__text">
+                                <p class="modal-body--item__title">{{ page.name }}</p>
+                                <p class="modal-body--item__subtitle">{{ page.url }}</p>
+                            </div>
+                            <div class="modal-body--item__radio">
+                                <input v-model="selectedPage" :value="page" type="radio" name="channel_key_select" />
+                            </div>
+                        </div>
                     </div>
 
                     <div class="modal-footer">
@@ -32,8 +50,8 @@
                             Voltar
                         </button>
 
-                        <button class="modal-default-button" @click="toggleModal">
-                            OK
+                        <button class="modal-default-button" @click="selectPage" :disabled="!selectedPage">
+                            Próximo
                         </button>
                     </div>
                 </div>

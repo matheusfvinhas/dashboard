@@ -47,7 +47,9 @@ export default class HomeView extends Vue {
             channel_key: ChannelKeyEnum.ANALYTICS,
         },
     ];
+    connectedChannels: Array<IPage> = [];
     selectedChannel: ChannelKeyEnum = null;
+    selectedPage: IPage = null;
     showModal: boolean = false;
 
     mounted(): void {
@@ -67,7 +69,38 @@ export default class HomeView extends Vue {
         this.showModal = !this.showModal;
     }
 
+    selectPage(): void {
+        this.connectedChannels.push({ ...this.selectedPage });
+        this.selectedPage = null;
+        this.toggleModal();
+    }
+
     get channelsList(): Array<IPage> {
         return this.pages.filter((page: IPage) => page.channel_key === this.selectedChannel) || [];
+    }
+
+    get seletedChannelTitle(): string {
+        switch (this.selectedChannel) {
+            case ChannelKeyEnum.FACEBOOK:
+                return 'Facebook';
+            case ChannelKeyEnum.MEU_NEGOCIO:
+                return 'Google Meu Negócio';
+            case ChannelKeyEnum.TWITTER:
+                return 'Twitter';
+            case ChannelKeyEnum.INSTAGRAM:
+                return 'Instagram';
+            case ChannelKeyEnum.ANALYTICS:
+                return 'Google Analytics';
+            case ChannelKeyEnum.YOUTUBE:
+                return 'Youtube';
+            case ChannelKeyEnum.PINTEREST:
+                return 'Pinterest';
+            case ChannelKeyEnum.LINKEDIN:
+                return 'Linkedin';
+            case ChannelKeyEnum.WHATSAPP:
+                return 'Whatsapp';
+            default:
+                return '';
+        }
     }
 }
