@@ -1,14 +1,27 @@
 <div>
     <section class="dashboard">
-        <div class="container">
-            <div class="widget_group">
-                <div v-for="(channel, index) of channels" :key="index" class="widget widget-dashboard">
-                    <div class="widget-front">
-                        <div class="widget-help"></div>
-                        <h3 v-html="channel.name"></h3>
-                        <div class="widget-login">
-                            <button @click="toggleModal(channel.channel_key)">Adicionar</button>
+        <div class="dashboard-container">
+            <div class="dashboard-group">
+                <div v-for="(channel, index) of channels" :key="index" class="dashboard-item">
+                    <div
+                        v-if="isConnected(channel)"
+                        :class="`dashboard-front-connected dashboard-front-connected--${channel.channel_key}`"
+                    >
+                        <div
+                            :class="`dashboard-front-connected__title dashboard-front-connected__title--${channel.channel_key}`"
+                        >
+                            {{ getConnectedChannelName(channel) }}
                         </div>
+                        <div class="dashboard-front-connected__title">
+                            {{ channel.name }}
+                        </div>
+                    </div>
+                    <div v-else class="dashboard-front">
+                        <h3 v-html="channel.name"></h3>
+
+                        <button class="dashboard-front__add" @click="toggleModal(channel.channel_key)">
+                            Adicionar
+                        </button>
                     </div>
                 </div>
             </div>
@@ -22,27 +35,39 @@
                     <div class="modal-header">
                         <div class="modal-header__title">Vincular página do {{ seletedChannelTitle }}</div>
 
-                        <div id="mdiv" @click="toggleModal">
-                            <div class="mdiv">
-                                <div class="md"></div>
+                        <div class="modal-header__close" @click="toggleModal">
+                            <div class="external">
+                                <div class="inner"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="modal-body">
-                        <h3>Selecione a página que você deseja vincular a este perfil</h3>
-                        <div class="modal-body--item" v-for="page of channelsList" @click="selectedPage = page">
-                            <div>
-                                <img class="modal-body--item__picture" :src="page.picture" alt="Imagem do perfil" />
+                        <template v-if="hasChannelsList">
+                            <h3>Selecione a página que você deseja vincular a este perfil</h3>
+
+                            <div class="modal-body__item" v-for="page of channelsList" @click="selectedPage = page">
+                                <div>
+                                    <img class="modal-body__item__picture" :src="page.picture" alt="Imagem do perfil" />
+                                </div>
+                                <div class="modal-body__item__text">
+                                    <p class="modal-body__item__title">{{ page.name }}</p>
+                                    <p class="modal-body__item__subtitle">{{ page.url }}</p>
+                                </div>
+                                <div class="modal-body__item__radio">
+                                    <input
+                                        v-model="selectedPage"
+                                        :value="page"
+                                        type="radio"
+                                        name="channel_key_select"
+                                    />
+                                </div>
                             </div>
-                            <div class="modal-body--item__text">
-                                <p class="modal-body--item__title">{{ page.name }}</p>
-                                <p class="modal-body--item__subtitle">{{ page.url }}</p>
-                            </div>
-                            <div class="modal-body--item__radio">
-                                <input v-model="selectedPage" :value="page" type="radio" name="channel_key_select" />
-                            </div>
-                        </div>
+                        </template>
+
+                        <template v-else>
+                            <h3>Não foi encontrada nenhuma página para esse canal</h3>
+                        </template>
                     </div>
 
                     <div class="modal-footer">
@@ -50,7 +75,7 @@
                             Voltar
                         </button>
 
-                        <button class="modal-default-button" @click="selectPage" :disabled="!selectedPage">
+                        <button class="modal-default-button" @click="selectPage" :disabled="!hasSelectedPage">
                             Próximo
                         </button>
                     </div>

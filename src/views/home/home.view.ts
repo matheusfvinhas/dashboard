@@ -3,6 +3,7 @@ import { ChannelKeyEnum } from '../../shared/enums/channel-key.enum';
 import { IChannel } from '../../shared/interfaces/channel.interface';
 import { IPage } from '../../shared/interfaces/page.interface';
 import { PageService } from '../../shared/services/page.service';
+import { LocalStorageUtil } from '../../utils/local-storage.util';
 import WithRender from './home.view.html?style=./home.view.scss';
 
 @WithRender
@@ -52,8 +53,14 @@ export default class HomeView extends Vue {
     selectedPage: IPage = null;
     showModal: boolean = false;
 
-    mounted(): void {
-        this.getAllPages();
+    async mounted(): Promise<void> {
+        await this.getAllPages();
+
+        LocalStorageUtil.getItem('connectedChannels')
+            .split(',')
+            .forEach((item: string) =>
+                this.connectedChannels.push({ ...this.pages.find((page: IPage) => page.id === parseInt(item)) })
+            );
     }
 
     async getAllPages(): Promise<void> {
@@ -71,8 +78,21 @@ export default class HomeView extends Vue {
 
     selectPage(): void {
         this.connectedChannels.push({ ...this.selectedPage });
+        LocalStorageUtil.setItem(
+            'connectedChannels',
+            this.connectedChannels.map((channel: IPage) => channel.id).toString()
+        );
         this.selectedPage = null;
         this.toggleModal();
+    }
+
+    isConnected(channel: IChannel): boolean {
+        return this.connectedChannels.some((c: IChannel) => c.channel_key === channel.channel_key);
+    }
+
+    getConnectedChannelName(channel: IChannel): string {
+        const selectedChannel = this.connectedChannels.find((c: IChannel) => c.channel_key === channel.channel_key);
+        return (!!selectedChannel && selectedChannel.name) || '';
     }
 
     get channelsList(): Array<IPage> {
@@ -102,5 +122,13 @@ export default class HomeView extends Vue {
             default:
                 return '';
         }
+    }
+
+    get hasSelectedPage(): boolean {
+        return !!this.selectedPage && !!this.selectedPage.id;
+    }
+
+    get hasChannelsList(): boolean {
+        return !!this.channelsList && !!this.channelsList.length;
     }
 }
