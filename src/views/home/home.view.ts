@@ -9,8 +9,9 @@ import WithRender from './home.view.html';
 @Component({
     name: 'Home',
     components: {
-        modal: (): Promise<any> => import('./components/modal').then((c: any) => c.default),
+        toolbar: (): Promise<any> => import('../../shared/components/toolbar').then((c: any) => c.default),
         dashboard: (): Promise<any> => import('./components/dashboard').then((c: any) => c.default),
+        modal: (): Promise<any> => import('./components/modal').then((c: any) => c.default),
     },
 })
 export default class HomeView extends Vue {

@@ -3,11 +3,10 @@ html {
 
     body {
         height: 100%;
+        margin: 0;
+        background-color: #f7f7f7;
     }
 }
 .main {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     height: 100%;
 }

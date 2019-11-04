@@ -1,0 +1,16 @@
+<section>
+    <div class="header-user">
+        <span class="header-user__time">{{ time }}</span>
+        <h2 class="header-user__title">Matheus Vinhas</h2>
+    </div>
+
+    <div class="header-main">
+        <ul>
+            <li v-for="(item, index) of items" :key="index" @click="selectItem(item.key)">
+                <div :class="[{'menu-nav-btn': true, 'active': isActive(item.key)}]">
+                    <p>{{ item.name }}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
