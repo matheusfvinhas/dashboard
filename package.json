@@ -35,5 +35,6 @@
     "engines": {
         "node": ">=11",
         "npm": ">=6"
-    }
+    },
+    "homepage": "."
 }
