@@ -1,16 +1,36 @@
-<v-toolbar app>
-    <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-    </v-toolbar-title>
+<section>
+    <div class="toolbar-user">
+        <label class="sidebar-trigger" @click="showNav = true">
+            <i class="material-icons">menu</i>
+        </label>
 
-    <v-spacer></v-spacer>
-    
-    <v-btn
-        flat
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        >
-        <span class="mr-2">Latest Release</span>
-    </v-btn>
-</v-toolbar>
+        <span class="toolbar-user__time">{{ time }}</span>
+        <h2 class="toolbar-user__title">Matheus Vinhas</h2>
+    </div>
+
+    <div class="toolbar-main">
+        <ul>
+            <li v-for="(item, index) of items" :key="index" @click="selectItem(item.key)">
+                <div :class="[{'toolbar-item': true, 'active': isActive(item.key)}]">
+                    <p>{{ item.name }}</p>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar" v-show="showNav">
+        <label class="sidebar-trigger" @click="showNav = false">
+            <i class="material-icons">menu</i>
+        </label>
+
+        <nav class="sidebar-navigation">
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item" v-for="(item, index) of items" :key="index" @click="selectItem(item.key)">
+                    <div :class="[{'sidebar-list-item-link': true, 'active': isActive(item.key)}]">
+                        <p>{{ item.name }}</p>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</section>

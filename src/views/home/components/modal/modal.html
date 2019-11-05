@@ -1,0 +1,50 @@
+<transition name="modal">
+    <div class="modal-mask">
+        <div class="modal-wrapper">
+            <div class="modal-container">
+                <div class="modal-header">
+                    <div class="modal-header__title">Vincular página do {{ seletedChannelTitle }}</div>
+
+                    <div class="modal-header__close" @click="toggleModal">
+                        <div class="external">
+                            <div class="inner"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-body">
+                    <template v-if="hasChannelsList">
+                        <h3>Selecione a página que você deseja vincular a este perfil</h3>
+
+                        <div class="modal-body__item" v-for="page of channelsList" @click="selectedPage = page">
+                            <div>
+                                <img class="modal-body__item__picture" :src="page.picture" alt="Imagem do perfil" />
+                            </div>
+                            <div class="modal-body__item__text">
+                                <p class="modal-body__item__title">{{ page.name }}</p>
+                                <p class="modal-body__item__subtitle">{{ page.url }}</p>
+                            </div>
+                            <div class="modal-body__item__radio">
+                                <input v-model="selectedPage" :value="page" type="radio" name="channel_key_select" />
+                            </div>
+                        </div>
+                    </template>
+
+                    <template v-else>
+                        <h3>Não foi encontrada nenhuma página para esse canal</h3>
+                    </template>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="modal-back-button" @click="toggleModal">
+                        Voltar
+                    </button>
+
+                    <button class="modal-default-button" @click="selectPage" :disabled="!hasSelectedPage">
+                        Próximo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</transition>

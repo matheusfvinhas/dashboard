@@ -1,0 +1,14 @@
+<section class="dashboard">
+    <div class="dashboard-container">
+        <div class="dashboard-group">
+            <dashboard-item
+                v-for="(channel, index) of channels"
+                :key="index"
+                class="dashboard-item"
+                :channel="channel"
+                :connected-channels="connectedChannels"
+                @toggleModal="toggleModal"
+            ></dashboard-item>
+        </div>
+    </div>
+</section>

@@ -5,4 +5,7 @@ export enum ChannelKeyEnum {
     ANALYTICS = 'google_analytics',
     YOUTUBE = 'youtube',
     PINTEREST = 'pinterest',
+    LINKEDIN = 'linkedin',
+    WHATSAPP = 'whatsapp',
+    MEU_NEGOCIO = 'meu_negocio',
 }

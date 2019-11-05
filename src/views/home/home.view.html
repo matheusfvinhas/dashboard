@@ -1,3 +1,13 @@
 <div>
-    <p v-for="(page, index) of pages" :key="index">{{ page.name }}</p>
+    <toolbar></toolbar>
+
+    <dashboard :connected-channels="connectedChannels" @toggleModal="toggleModal"></dashboard>
+
+    <modal
+        v-if="showModal"
+        :selected-channel="selectedChannel"
+        :channels-list="channelsList"
+        @toggleModal="toggleModal"
+        @selectPage="selectPage"
+    ></modal>
 </div>
