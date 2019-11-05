@@ -1,3 +1,5 @@
+@import '../../../../shared/scss/variables.scss';
+
 .modal-mask {
     position: fixed;
     z-index: 9998;
@@ -14,13 +16,17 @@
         vertical-align: middle;
 
         .modal-container {
-            width: 600px;
+            width: 80%;
             margin: 0px auto;
             background-color: #fff;
             border-radius: 2px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
             transition: all 0.3s ease;
             font-family: Helvetica, Arial, sans-serif;
+
+            @media (min-width: $screen-tablet-min) {
+                width: 600px;
+            }
 
             .modal-header {
                 display: flex;

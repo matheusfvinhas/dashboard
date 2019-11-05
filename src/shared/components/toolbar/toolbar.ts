@@ -18,6 +18,7 @@ export default class ToolbarComponent extends Vue {
     ];
     selectedItem: ToolbarItemKeyEnum = ToolbarItemKeyEnum.DASHBOARD;
     time: string = null;
+    showNav: boolean = null;
 
     created(): void {
         this.setTime();

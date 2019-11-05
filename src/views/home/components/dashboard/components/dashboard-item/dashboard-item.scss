@@ -1,3 +1,5 @@
+@import '../../../../../../shared/scss/variables.scss';
+
 .dashboard {
     .dashboard-container {
         .dashboard-group {
@@ -13,7 +15,6 @@
                     border: 2px dotted #cbcccd;
 
                     h3 {
-                        font-family: 'prime';
                         font-weight: normal;
                         font-size: 20px;
                         color: #535353;
@@ -24,14 +25,19 @@
                     }
 
                     &__add {
-                        width: 98px;
-                        height: 32px;
+                        width: 80%;
+                        height: 48px;
                         border-radius: 3px;
                         background: #e02b4a;
                         font-weight: bold;
                         font-size: 14px;
                         color: #fff;
                         cursor: pointer;
+
+                        @media (min-width: $screen-tablet-min) {
+                            width: 98px;
+                            height: 32px;
+                        }
                     }
                 }
 

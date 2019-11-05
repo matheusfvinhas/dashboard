@@ -1,16 +1,36 @@
 <section>
-    <div class="header-user">
-        <span class="header-user__time">{{ time }}</span>
-        <h2 class="header-user__title">Matheus Vinhas</h2>
+    <div class="toolbar-user">
+        <label class="sidebar-trigger" @click="showNav = true">
+            <i class="material-icons">menu</i>
+        </label>
+
+        <span class="toolbar-user__time">{{ time }}</span>
+        <h2 class="toolbar-user__title">Matheus Vinhas</h2>
     </div>
 
-    <div class="header-main">
+    <div class="toolbar-main">
         <ul>
             <li v-for="(item, index) of items" :key="index" @click="selectItem(item.key)">
-                <div :class="[{'menu-nav-btn': true, 'active': isActive(item.key)}]">
+                <div :class="[{'toolbar-item': true, 'active': isActive(item.key)}]">
                     <p>{{ item.name }}</p>
                 </div>
             </li>
         </ul>
+    </div>
+
+    <div class="sidebar" v-show="showNav">
+        <label class="sidebar-trigger" @click="showNav = false">
+            <i class="material-icons">menu</i>
+        </label>
+
+        <nav class="sidebar-navigation">
+            <ul class="sidebar-list">
+                <li class="sidebar-list-item" v-for="(item, index) of items" :key="index" @click="selectItem(item.key)">
+                    <div :class="[{'sidebar-list-item-link': true, 'active': isActive(item.key)}]">
+                        <p>{{ item.name }}</p>
+                    </div>
+                </li>
+            </ul>
+        </nav>
     </div>
 </section>

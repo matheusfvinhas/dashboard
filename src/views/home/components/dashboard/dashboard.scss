@@ -1,14 +1,30 @@
+@import '../../../../shared/scss/variables.scss';
+
 .dashboard {
-    margin: 50px 80px;
+    margin: 0;
+
+    @media (min-width: $screen-tablet-min) {
+        margin: 50px 80px;
+    }
 
     .dashboard-container {
         .dashboard-group {
             display: flex;
-            flex-wrap: wrap;
+            flex-direction: column;
+
+            @media (min-width: $screen-tablet-min) {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+            }
 
             .dashboard-item {
-                width: 20%;
+                width: 100%;
                 height: 226px;
+
+                @media (min-width: $screen-tablet-min) {
+                    width: 20%;
+                }
             }
         }
     }
